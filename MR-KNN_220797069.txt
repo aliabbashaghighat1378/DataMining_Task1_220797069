@@ -1,0 +1,144 @@
+به نام خدا 
+علی عباس حقیقت 
+شماره دانشجویی : 220797069
+
+
+#farz mikonom hajm ziad va dasteh bandi nashode basket kala(faghat ba tavajoh be id)
+#hala miyaym baray ijad basket in haro ke barfarz dar yek dataset va harkodam dar
+#khotoot jodaghanrh hastan survey mikonim mitoonim baray har basket_id , product_id
+#yek meghdar 1 ham be onvan key begirim keh sarf nazar mikonim
+
+
+#farz mikonim yek operator ',' beyn p_id(product_id) , b_id(basket_id) vojud darad
+
+map (chunk_of_txt):
+   whole_data[] = chunk_of_txt.split('\n')
+   foreach block in whole_data:
+      temp[].add(block.split(','))
+      KeyValue_dict.update({toInt(temp[0]): toInt(temp[1])})
+   return KeyValue_dict
+
+
+
+
+
+#hamoontor ke ghoftim product_id ha tartib az 1 ta n darand ba inja mitavanim farz konim 
+#batavajjoh be inke basket_id ha ham int hastand agar sort shavand barabat ha kenar ham 
+#mioftand
+
+sort(KeyValue_dict):   #buble sorting on key of the dictionary
+   for key,value in KeyValue_dict.items():
+     if(KeyValue_dict[key]<KeyValue_dict[key+1]):
+        temp=KeyValue_dict[key]
+        KeyValue_dict[key]=KeyValue_dict[key+1]
+        KeyValue_dict[key+1]=temp
+      endif
+    endfor
+   return KeyValue_dict
+
+
+
+
+#implementin reduce as a nested dictionary be in shekl ke har bar check mikomad agar on 
+#basket_id dar nested_dict bood faghat maghadir dictinary ke be onvan value on ast ra set 
+#mikond(albateh haminja ham shart tekrari nabooda product_id hast keh agar tekrari bood
+#faghat count ro ziad kone va agar na ozve jadid ezafe kone) va agar nabood ozve jadid 
+#add mikone
+reduce(KeyValue_dict):
+   #temp = data.keys()[1]
+   for key,value in KeyValue_dict.items():
+     if(KeyValue_dict[key] == temp):
+        #dar inja baray check shart niaz be halgheh dige bood vali batavajoh be shebhe cod
+        #bodan dar ghavanin syntax sakht nemigiram va faghat manzoor ra ba code bayan mikonam
+        if(KeyValue_dic[value] is in nested_dic[KeyValue_dict[key][*]] )
+           nested_dic[KeyValue_dict[key]][the one is match] + = 1
+        else :
+           nested_dict[KeyValue_dict[key]].update({KeyValue_dict[value]: 1})
+        endif
+     else:
+         nested_dict.update({KeyValue_dict[key] : {KeyValue_dict[value]: 1}})
+         temp = KeyValue_dict[key]
+
+      endif
+    endfor
+   return nested_dict
+
+
+
+
+#ma mikhahim yek sampel ba 1\100 tedad ra ba adad random ijad konim ba yek halgheh tedad adad random mored
+#nazar ra misazim ba halgheh baedi be ezay har adad random mojud yek sabad ra add mikonim
+ 
+
+sampeling(nested_dict):
+   n = length(nested_dict)/100
+   rand [n]  #an array with length of 1/100 basket_id
+   for i in range(n):
+      rand[i] =round((rand)*(length(nested_dict))) # tabe rand adad beyn 0 va 1
+      if (rand[i] is in rand[0 ... i-1]): #ada random tekrari nasazad
+         i =i -1
+      endif   
+   ensfor
+   k= 1 
+   for key,value in nested_dict.items():
+     if(k is in rand[]):
+          sampel_nested_dict.update(nested_dict.items)
+      endif
+      k = k+1
+    endfor  
+    return sampel_nested_dict
+
+
+
+
+#dar in bakhesh ghasde piyadeh sazi nahve yaftan favasel dar beyn azay sampel va kol data
+#ra darim . farz mikonim basket_id mored nazar masalan ozve aval nested_dict ast va favasel
+#ra ba an miyabim
+
+compute_dist(sampel_nested_dict , nested_dict):
+    dict_distances # dictionary or addindistance and basket_id
+    goal_BID = nested_dic.keys()[1]
+    for key,value in sampel_nested_dict.items():
+     #dar inja hadaf shebhe kod faghat namayesh mafhoom ast va agarnah baray pyadeh sazi
+     #shart mored nazar niaz be piyade sazi halgheh hast
+     if(goal_BID[value][0] which are same with sampel_nested_dict[value][0]):
+        #marhale payoin baray tamam product_id haye barabar na faghat yeki
+        dict_distances[sampel_nested_dict.value] + = abs(goal_BID[value][1] - sampel_nested_dict[value][1] )
+     elsif(goal_BID[value][0] which are not same with sampel_nested_dict[value][0])
+        #marhale payiin baray tamam product_id haye nabarabar do taraf na faghat yeki
+        dict_distances[sampel_nested_dict.value] + = abs(goal_BID[value][1] + sampel_nested_dict[value][1] )
+     endif
+    endfor
+    return dict_distances     
+
+
+           
+#hal baray yaftan k nazdiktarin hamasayek bayd dictionary dict_distances ra sort konim va k taye avval ra 
+#be onvan khoruji chap konim
+
+KNearestNeighbour(dict_distances , k ):
+   for key,value in dict_distances.items():
+     if(dict_distances[key]<dict_distances[key+1]):
+        temp=dict_distances[key]
+        dict_distances[key]= dict_distances[key+1]
+        dict_distances[key+1]=temp
+      endif
+    endfor
+   n= 1
+   for key,value in dict_distances.items():
+     if(n > k):
+        break
+      endif
+     else : 
+       print(dict_distances.items())
+       n = n+ 1 
+    endfor
+
+# tozih mohem : dar shebhe code ha bishtar talash baray model kardan mafhoom va algorithme tozih dadeh shode dar
+#file word ba hamin name bood faleza baezi az nested dictionary ha be lahaz syntax che basa sahih nabashand
+#chera keh hadadf in bood ke in shebhe code HA BE HAMRAHE COMMENT HA VA toziha dakhel file word betavanand mafhoom
+# ra ta had momken revayat konand
+#hamchenin bayad ezafeh konam baray bandeh ham rahat bood keh har sabad ra yek list ba tool n(dar order chand1000)
+#farz konam va yek matris fogh bozorgr sparse dashteh basham ama dar donyaye vaghe in shodani nist faleza rah sakht
+#tar yani nested dictinary ra ya har structure (key value) ra mored estefadeh gharar dadam 
+#sepas az tavajjoh shoma
