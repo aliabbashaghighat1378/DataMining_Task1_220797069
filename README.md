@@ -6,6 +6,7 @@ this  is a university home work to implement a pyspark code which count all the 
 3. third subtask is the file by the name of Spark.py
 
 how to run spark.py : if you can give the code true address of your file. then copy it in bin directory of spark then go to cmd in spark/bin directory then run spark-submit spark.py
-and actually the Spark.py code id Colab base and I would put the link in the Spark.py file to open the file in Colab
+
+and actually the Spark.py code is Colab base and I would put the link in the Spark.py file to open the file in Colab
 
 thanks
